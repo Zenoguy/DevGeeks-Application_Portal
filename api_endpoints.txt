@@ -1,0 +1,8 @@
+GET /api/jobs
+POST /api/jobs
+PUT /api/jobs/:id
+DELETE /api/jobs/:id
+POST /api/apply
+POST /api/auth/signup
+POST /api/auth/login
+GET /api/admin/jobs
