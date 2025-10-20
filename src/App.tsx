@@ -9,6 +9,7 @@ import { useAuth } from './hooks/useAuth';
 import { useJobs } from './hooks/useJobs';
 import { supabase } from './lib/supabase';
 import { Job } from './types';
+import Squares from './components/Squares';
 
 function App() {
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
@@ -60,8 +61,16 @@ function App() {
 
   if (authLoading) {
     return (
-      <div className="min-h-screen bg-slate-900 flex items-center justify-center">
-        <div className="text-center">
+      <div className="relative min-h-screen bg-slate-900 flex items-center justify-center overflow-hidden">
+        <Squares
+          speed={0.4}
+          squareSize={45}
+          direction='diagonal'
+          borderColor='rgba(6, 182, 212, 0.12)'
+          hoverFillColor='rgba(6, 182, 212, 0.08)'
+          className="absolute inset-0"
+        />
+        <div className="relative z-10 text-center">
           <div className="w-16 h-16 border-4 border-cyan-500 border-t-transparent rounded-full animate-spin mx-auto mb-4"></div>
           <p className="text-gray-400">Loading...</p>
         </div>

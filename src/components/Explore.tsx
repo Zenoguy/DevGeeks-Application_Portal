@@ -5,6 +5,7 @@ import { Job } from '../types';
 import { JobCard } from './JobCard';
 import { JobDetailsModal } from './JobDetailsModal';
 import { ApplyModal, ApplicationData } from './ApplyModal';
+import Squares from './Squares';
 
 interface ExploreProps {
   jobs: Job[];
@@ -45,6 +46,14 @@ export function Explore({ jobs, onApply }: ExploreProps) {
   return (
     <section id="explore" className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8">
       <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-800/50 to-slate-900" />
+      <Squares
+        speed={0.3}
+        squareSize={50}
+        direction='up'
+        borderColor='rgba(59, 130, 246, 0.1)'
+        hoverFillColor='rgba(59, 130, 246, 0.08)'
+        className="absolute inset-0"
+      />
 
       <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
