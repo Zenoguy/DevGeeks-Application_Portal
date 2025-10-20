@@ -3,6 +3,7 @@ import { Plus, Edit, Trash2, ArrowLeft, Save, AlertCircle } from 'lucide-react';
 import { useState } from 'react';
 import { Job } from '../types';
 import { useJobs } from '../hooks/useJobs';
+import Squares from './Squares';
 
 interface AdminProps {
   onBack: () => void;
@@ -72,8 +73,16 @@ export function Admin({ onBack }: AdminProps) {
   };
 
   return (
-    <div className="min-h-screen bg-slate-900 py-20 px-4 sm:px-6 lg:px-8">
-      <div className="max-w-7xl mx-auto">
+    <div className="relative min-h-screen bg-slate-900 py-20 px-4 sm:px-6 lg:px-8 overflow-hidden">
+      <Squares
+        speed={0.2}
+        squareSize={60}
+        direction='right'
+        borderColor='rgba(139, 92, 246, 0.08)'
+        hoverFillColor='rgba(139, 92, 246, 0.05)'
+        className="absolute inset-0"
+      />
+      <div className="relative z-10 max-w-7xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
