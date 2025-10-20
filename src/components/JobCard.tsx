@@ -1,14 +1,15 @@
 import { motion } from 'framer-motion';
-import { MapPin, DollarSign, Calendar, Star, ArrowRight } from 'lucide-react';
+import { MapPin, DollarSign, Calendar, Star, ArrowRight, Eye } from 'lucide-react';
 import { Job } from '../types';
 
 interface JobCardProps {
   job: Job;
   onApply: (job: Job) => void;
+  onViewDetails: (job: Job) => void;
   index: number;
 }
 
-export function JobCard({ job, onApply, index }: JobCardProps) {
+export function JobCard({ job, onApply, onViewDetails, index }: JobCardProps) {
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -80,15 +81,26 @@ export function JobCard({ job, onApply, index }: JobCardProps) {
             )}
           </div>
 
-          <motion.button
-            whileHover={{ scale: 1.02, x: 5 }}
-            whileTap={{ scale: 0.98 }}
-            onClick={() => onApply(job)}
-            className="w-full mt-4 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all flex items-center justify-center space-x-2 group"
-          >
-            <span>Apply Now</span>
-            <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
-          </motion.button>
+          <div className="flex gap-3 mt-4">
+            <motion.button
+              whileHover={{ scale: 1.02 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => onViewDetails(job)}
+              className="flex-1 px-6 py-3 rounded-xl bg-white/5 border border-white/10 text-white font-semibold hover:bg-white/10 transition-all flex items-center justify-center space-x-2 group"
+            >
+              <Eye className="w-4 h-4" />
+              <span>View Details</span>
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.02, x: 5 }}
+              whileTap={{ scale: 0.98 }}
+              onClick={() => onApply(job)}
+              className="flex-1 px-6 py-3 rounded-xl bg-gradient-to-r from-cyan-500 to-blue-600 text-white font-semibold shadow-lg shadow-cyan-500/30 hover:shadow-cyan-500/50 transition-all flex items-center justify-center space-x-2 group"
+            >
+              <span>Apply Now</span>
+              <ArrowRight className="w-4 h-4 group-hover:translate-x-1 transition-transform" />
+            </motion.button>
+          </div>
         </div>
       </div>
     </motion.div>

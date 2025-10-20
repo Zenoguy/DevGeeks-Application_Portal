@@ -3,6 +3,8 @@ import { Search, Filter, Briefcase } from 'lucide-react';
 import { useState } from 'react';
 import { Job } from '../types';
 import { JobCard } from './JobCard';
+import { JobDetailsModal } from './JobDetailsModal';
+import { ApplyModal, ApplicationData } from './ApplyModal';
 
 interface ExploreProps {
   jobs: Job[];
@@ -12,6 +14,9 @@ interface ExploreProps {
 export function Explore({ jobs, onApply }: ExploreProps) {
   const [searchTerm, setSearchTerm] = useState('');
   const [selectedType, setSelectedType] = useState<string>('all');
+  const [selectedJob, setSelectedJob] = useState<Job | null>(null);
+  const [isDetailsModalOpen, setIsDetailsModalOpen] = useState(false);
+  const [isApplyModalOpen, setIsApplyModalOpen] = useState(false);
 
   const filteredJobs = jobs.filter(job => {
     const matchesSearch = job.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -19,6 +24,23 @@ export function Explore({ jobs, onApply }: ExploreProps) {
     const matchesType = selectedType === 'all' || job.type === selectedType;
     return matchesSearch && matchesType;
   });
+
+  const handleViewDetails = (job: Job) => {
+    setSelectedJob(job);
+    setIsDetailsModalOpen(true);
+  };
+
+  const handleApplyClick = (job: Job) => {
+    setSelectedJob(job);
+    setIsApplyModalOpen(true);
+  };
+
+  const handleApplicationSubmit = (data: ApplicationData) => {
+    console.log('Application submitted:', data);
+    if (selectedJob) {
+      onApply(selectedJob);
+    }
+  };
 
   return (
     <section id="explore" className="relative min-h-screen py-20 px-4 sm:px-6 lg:px-8">
@@ -91,7 +113,13 @@ export function Explore({ jobs, onApply }: ExploreProps) {
 
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {filteredJobs.map((job, index) => (
-            <JobCard key={job.id} job={job} onApply={onApply} index={index} />
+            <JobCard
+              key={job.id}
+              job={job}
+              onApply={handleApplyClick}
+              onViewDetails={handleViewDetails}
+              index={index}
+            />
           ))}
         </div>
 
@@ -107,6 +135,20 @@ export function Explore({ jobs, onApply }: ExploreProps) {
           </motion.div>
         )}
       </div>
+
+      <JobDetailsModal
+        job={selectedJob}
+        isOpen={isDetailsModalOpen}
+        onClose={() => setIsDetailsModalOpen(false)}
+        onApply={handleApplyClick}
+      />
+
+      <ApplyModal
+        job={selectedJob}
+        isOpen={isApplyModalOpen}
+        onClose={() => setIsApplyModalOpen(false)}
+        onSubmit={handleApplicationSubmit}
+      />
     </section>
   );
 }
